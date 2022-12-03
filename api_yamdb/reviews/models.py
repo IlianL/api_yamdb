@@ -119,6 +119,7 @@ class Review(models.Model):
         verbose_name='Автор отзыва',
     )
     text = models.TextField(
+        max_length=2500,
         verbose_name='Текст отзыва',
         help_text='Добавьте Ваш отзыв'
     )
@@ -127,6 +128,7 @@ class Review(models.Model):
             MinValueValidator(1),
             MaxValueValidator(100),
         ),
+        default=75,
         error_messages=(
             {'validators': 'Поставьте оценку от 1 до 100.'}
         ),
