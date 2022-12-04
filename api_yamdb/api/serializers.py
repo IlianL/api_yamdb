@@ -109,15 +109,11 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    def validate_correct_score(self, value):
-        if 1 <= value <= 100:
-            raise serializers.ValidationError('Поставьте оценку от 1 до 100.')
-        return value
-
-    def validate_unique_name(self, data):
+    def validate_unique_review(self, data):
         request = self.context['request']
         author = request.user
-        title = self.context.get('view').kwargs.get('title_id')
+        title_id=request.kwargs.get('title_id')
+        title = Title.objects.get(title_id)
         if (
             request.method == 'POST'
             and Review.objects.filter(title=title, author=author).exists()

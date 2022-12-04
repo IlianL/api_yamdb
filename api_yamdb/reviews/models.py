@@ -124,13 +124,14 @@ class Review(models.Model):
         help_text='Добавьте Ваш отзыв'
     )
     score = models.IntegerField(
+        blank=False,
+        null=False,
         validators=(
             MinValueValidator(1),
-            MaxValueValidator(100),
+            MaxValueValidator(10),
         ),
-        default=75,
         error_messages=(
-            {'validators': 'Поставьте оценку от 1 до 100.'}
+            {'validators': 'Поставьте оценку от 1 до 10.'}
         ),
         verbose_name='Оценка произведения',
         help_text='Поставьте оценку'
@@ -145,10 +146,6 @@ class Review(models.Model):
         return self.text
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=('title', 'author',),
-                name='unique_review',
-            )
-        ]
+        # constraints = [models.UniqueConstraint(
+        #                fields=['title', 'author'], name='unique_review')]
         ordering = ['-pub_date']
