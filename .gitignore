@@ -147,5 +147,7 @@ dmypy.json
 
 # папки со статикой и медиа
 media/
-yatube_api/api/migrations/
-yatube_api/reviews/migrations/
+
+# миграции
+api_yamdb/api/migrations/
+api_yamdb/reviews/migrations/
