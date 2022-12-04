@@ -100,6 +100,7 @@ class UserProfileSerializer(UsersSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    """Изменение данных отзыва."""
     title = serializers.SlugRelatedField(
         slug_field='name',
         read_only=True

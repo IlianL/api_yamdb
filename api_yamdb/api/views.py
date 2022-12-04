@@ -6,6 +6,7 @@ from rest_framework import (filters, mixins, permissions, status, views,
                             viewsets)
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 from reviews.models import Category, Genre, Title, User, Review
@@ -126,7 +127,7 @@ class UsersViewSet(viewsets.ModelViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
-    permission_classes = (IsAuthorIsAdminIsModeratorOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly, IsAuthorIsAdminIsModeratorOrReadOnly,)
 
     def get_queryset(self):
         title = get_object_or_404(
