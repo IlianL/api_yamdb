@@ -111,8 +111,8 @@ class ReviewSerializer(serializers.ModelSerializer):
     )
 
     def validate_correct_score(self, value):
-        if 1 <= value <= 100:
-            raise serializers.ValidationError('Поставьте оценку от 1 до 100.')
+        if 1 <= value <= 10:
+            raise serializers.ValidationError('Поставьте оценку от 1 до 10.')
         return value
 
     def validate_unique_name(self, data):
