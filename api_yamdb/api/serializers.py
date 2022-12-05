@@ -7,6 +7,11 @@ from reviews.models import Category, Genre, Title, User
 
 from .validators import UsernameValidator
 
+CAT_LIST = list(Category.objects.all())
+GEN_LIST = list(Genre.objects.all())
+CAT_CHOICES = [(category.slug, category) for category in CAT_LIST]
+GEN_CHOICES = [(genre.slug, genre) for genre in GEN_LIST]
+
 
 class SingUpSerializer(serializers.Serializer):
 
@@ -36,15 +41,12 @@ class ReceiveTokenSerializer(serializers.Serializer):
 
 
 class TitleSerializer(serializers.ModelSerializer):
-    category = serializers.SlugRelatedField(
-        slug_field='slug',
-        queryset=Category.objects.all()
+    category = serializers.ChoiceField(
+        choices=CAT_CHOICES
     )
 
-    genre = serializers.SlugRelatedField(
-        slug_field='slug',
-        many=True,
-        queryset=Genre.objects.all()
+    genre = serializers.MultipleChoiceField(
+        choices=CAT_CHOICES
     )
 
     class Meta:
@@ -63,7 +65,7 @@ class TitleSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = '__all__'
+        fields = ('name', 'slug')
         model = Category
         lookup_field = 'slug'
 
@@ -71,7 +73,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class GenreSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = '__all__'
+        fields = ('name', 'slug')
         model = Genre
         lookup_field = 'slug'
 
